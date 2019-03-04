@@ -6,7 +6,6 @@ import com.example.trademe.mvp.IBaseView
 class LogInContract {
 
     interface View : IBaseView {
-        fun onLoginResult(result: String)
+        fun onLoginResult(message: String)
     }
-
 }
