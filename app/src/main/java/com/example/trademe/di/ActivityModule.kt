@@ -1,5 +1,6 @@
 package com.example.trademe.di
 
+import com.example.trademe.dashboardactivity.DahBoardActivity
 import com.example.trademe.ligIn.LogInActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,7 +10,9 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityModule {
 
     @ContributesAndroidInjector(modules = [AppModule::class])
-    internal abstract fun contributeProductListActivity(): LogInActivity
+    internal abstract fun contributeLogInActivity(): LogInActivity
 
+    @ContributesAndroidInjector(modules = [AppModule::class])
+    internal abstract fun contributeDahBoardActivity(): DahBoardActivity
 
 }
