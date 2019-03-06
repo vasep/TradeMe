@@ -14,7 +14,9 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.trademe.R
 import com.example.trademe.mvp.BaseActivity
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_dah_board.*
+import kotlinx.android.synthetic.main.dahboard_content.*
 
 class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,12 +24,12 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
     lateinit var horizontalDashRVAdapter : HorizontalDashRVAdapter
     lateinit var toggle : ActionBarDrawerToggle
     val bitmapArray = ArrayList<Bitmap>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dah_board)
         setSupportActionBar(toolbar)
 
+        val firebasdatabase =FirebaseDatabase.getInstance().getReference("user")
 
         addBitmapforDashBoard()
         inItVerticalDashRV()
@@ -67,6 +69,7 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
     private fun inItActionBar(){
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle("")
         toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
