@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "862609533419",
+    "firebase_url": "https://trademe-db8c3.firebaseio.com",
+    "project_id": "trademe-db8c3",
+    "storage_bucket": "trademe-db8c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862609533419:android:6f28e851ae6286f5",
+        "android_client_info": {
+          "package_name": "com.example.trademe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862609533419-gc42eu4q67mn7cjaddclediakbh0c6ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trademe",
+            "certificate_hash": "21d89c093c0696805c9e25216aa36f8bdbc73df6"
+          }
+        },
+        {
+          "client_id": "862609533419-n2sksbj183tpld8m6arce1oicta0eman.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIZcleW9L0C5I9WklSgXYcjVeD_jdiR0M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862609533419-n2sksbj183tpld8m6arce1oicta0eman.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
