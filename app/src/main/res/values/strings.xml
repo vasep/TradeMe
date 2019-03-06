@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">TradeMe</string>
     <string name="title_activity_log_in">LogInActivity</string>
     <string name="title_activity_dah_board">DahBoardActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
