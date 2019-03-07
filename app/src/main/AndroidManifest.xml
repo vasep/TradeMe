@@ -10,9 +10,9 @@
             android:supportsRtl="true"
             android:label="TradeMe"
             android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ligIn.LogInActivity">
+        <activity android:name=".dashboardactivity.DahBoardActivity">
         </activity>
-        <activity android:name=".dashboardactivity.DahBoardActivity"
+        <activity android:name=".ligIn.LogInActivity"
         android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

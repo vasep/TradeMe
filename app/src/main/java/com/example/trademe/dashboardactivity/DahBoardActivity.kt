@@ -1,9 +1,13 @@
 package com.example.trademe.dashboardactivity
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -12,18 +16,25 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.LinearLayout
 import com.example.trademe.R
 import com.example.trademe.mvp.BaseActivity
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_dah_board.*
+import kotlinx.android.synthetic.main.bottom_alert_layout.*
 import kotlinx.android.synthetic.main.dahboard_content.*
+import kotlinx.android.synthetic.main.nav_header_dah_board.*
 
-class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(), NavigationView.OnNavigationItemSelectedListener {
+class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(), NavigationView.OnNavigationItemSelectedListener, BootSheetFragment.BottomSheetListener {
+
 
     lateinit var verticalDashRVAdapter: VerticalDashRVAdapter
     lateinit var horizontalDashRVAdapter : HorizontalDashRVAdapter
     lateinit var toggle : ActionBarDrawerToggle
     val bitmapArray = ArrayList<Bitmap>()
+    val REQUEST_IMAGE_CAPTURE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dah_board)
@@ -35,9 +46,37 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
         inItVerticalDashRV()
         inItHorizontalDashRV()
         inItActionBar()
+        handlePostClick()
+
 
     }
 
+    private fun handlePostClick(){
+        bt_post.setOnClickListener{
+            val bottomsheet = BootSheetFragment()
+            bottomsheet.show(supportFragmentManager, "BottomSheetFragment")
+        }
+
+    }
+    override fun onOptionClick( ) {
+        dispatchTakePictureIntent()
+    }
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data!!.extras.get("data") as Bitmap
+            bitmapArray.add(imageBitmap)
+            verticalDashRVAdapter.notifyDataSetChanged()
+        }
+    }
     private fun inItHorizontalDashRV(){
         horizontalDashRVAdapter= HorizontalDashRVAdapter(this)
         val layoutmanager= LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)

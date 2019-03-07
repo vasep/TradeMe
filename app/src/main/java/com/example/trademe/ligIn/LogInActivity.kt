@@ -1,5 +1,6 @@
 package com.example.trademe.ligIn
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.design.widget.Snackbar
@@ -15,98 +16,70 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import kotlinx.android.synthetic.main.login_main.*
 import android.content.Intent
+import android.support.v4.content.ContextCompat
 
 import android.view.View
+import android.widget.ProgressBar
 import com.example.trademe.R
 
 import com.example.trademe.dashboardactivity.DahBoardActivity
+import com.example.trademe.dashboardactivity.DashBoardContract
+import com.example.trademe.dashboardactivity.ForgetPasswordActivity
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Provides
+import io.reactivex.internal.util.HalfSerializer.onComplete
 import javax.inject.Inject
 
 
-class LogInActivity : BaseActivity<LogInContract.View, LogInPresenter>(), LogInContract.View,GoogleApiClient.OnConnectionFailedListener {
-
-
-    private val TAG = LogInActivity::class.simpleName
-
-    private var mGoogleApiClient: GoogleApiClient? = null
-
-    private val SIGN_IN_REQUEST_CODE = 888
+class LogInActivity : BaseActivity<LogInContract.View, LogInPresenter>(), LogInContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_main)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken()
-            .requestEmail()
-            .build()
+
+        val PD = ProgressDialog(this);
 
 
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-            .enableAutoManage(this, this)
-            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-            .build()
+        sign_in_button.setOnClickListener({
+            presenter.loginUser(email.text.toString(), password.text.toString(), this)
+        })
 
-        signIn()
+        sign_up_button.setOnClickListener ({
+            val intent = Intent(this, DahBoardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+        })
 
+        forget_password_button.setOnClickListener{
+            val intent = Intent(this, ForgetPasswordActivity::class.java)
+            intent.putExtra("Mode", 0)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+
+        }
     }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.setAuthListener()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.removeAuthListener()
-    }
-
 
     override fun setProgressBar(show: Boolean) {
-        sign_in_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
-        sign_in_button.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun startDashBoardActivity() {
-        val intent = Intent(this, DahBoardActivity::class.java)
-        startActivity(intent)
-
-        setProgressBar(false)
     }
 
     override fun showFirebaseAuthenticationFailedMessage() {
-            Toast.makeText(this, "Authentication failed.",
-                Toast.LENGTH_SHORT).show();
-
-            setProgressBar(false);
-
-    }
-    override fun onConnectionFailed( connectionResult: ConnectionResult) {
-        Log.e(TAG, "onConntectionFailed " + connectionResult.getErrorMessage());
     }
 
+    override fun onResume() {
+        if(presenter.mFirebaseAuth.currentUser!=null){
 
-    fun signIn() {
-
-        login_button.setOnClickListener {
-            setProgressBar(true)
-            val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-            startActivityForResult(signInIntent, SIGN_IN_REQUEST_CODE)
+            val intent = Intent(this, DahBoardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
         }
+        super.onResume()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode === SIGN_IN_REQUEST_CODE) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result.isSuccess) {
-                presenter.logInWithFirebase(result.signInAccount!!)
-            }
-        }
-    }
-
 }
