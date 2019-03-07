@@ -25,7 +25,7 @@ class App : Application(), HasActivityInjector, HasSupportFragmentInjector, HasF
     override fun onCreate() {
         super.onCreate()
 
-        FirebaseApp.initializeApp(this)
+      val auth =FirebaseApp.initializeApp(this)
 
        DaggerAppComponent
             .builder()
