@@ -10,13 +10,10 @@ class LogInContract {
 
      interface View : IBaseView{
 
-        fun startDashBoardActivity()
-
-        fun showFirebaseAuthenticationFailedMessage()
     }
 
      interface Presenter {
 
-        fun logInWithFirebase(account: GoogleSignInAccount)
+
     }
 }

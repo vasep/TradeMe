@@ -6,14 +6,19 @@
             android:name=".App"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
+            android:label="TradeMe"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:label="TradeMe"
             android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ligIn.ForgetAndChangePass">
+        </activity>
+        <activity android:name=".ligIn.RegistrationActivity">
+        </activity>
         <activity android:name=".dashboardactivity.DahBoardActivity">
         </activity>
-        <activity android:name=".ligIn.LogInActivity"
-        android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".ligIn.LogInActivity"
+                android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

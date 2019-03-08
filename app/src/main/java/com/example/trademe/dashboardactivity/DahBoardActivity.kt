@@ -19,12 +19,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import com.example.trademe.R
+import com.example.trademe.ligIn.LogInActivity
 import com.example.trademe.mvp.BaseActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_dah_board.*
 import kotlinx.android.synthetic.main.bottom_alert_layout.*
 import kotlinx.android.synthetic.main.dahboard_content.*
 import kotlinx.android.synthetic.main.nav_header_dah_board.*
+import com.google.firebase.auth.FirebaseUser
+
+
 
 class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(), NavigationView.OnNavigationItemSelectedListener, BootSheetFragment.BottomSheetListener {
 
@@ -34,6 +39,7 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
     lateinit var toggle : ActionBarDrawerToggle
     val bitmapArray = ArrayList<Bitmap>()
     val REQUEST_IMAGE_CAPTURE = 1
+    var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +47,13 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
         setSupportActionBar(toolbar)
 
         val firebasdatabase =FirebaseDatabase.getInstance().getReference("user")
+        user=presenter.mFirebaseAuth.currentUser
 
         addBitmapforDashBoard()
         inItVerticalDashRV()
         inItHorizontalDashRV()
         inItActionBar()
         handlePostClick()
-
 
     }
 
@@ -56,6 +62,18 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
             val bottomsheet = BootSheetFragment()
             bottomsheet.show(supportFragmentManager, "BottomSheetFragment")
         }
+
+    }
+
+    override fun onResume() {
+
+        if(presenter.mFirebaseAuth.currentUser==null){
+            val intent = Intent(this, LogInActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
+        }
+        super.onResume()
 
     }
     override fun onOptionClick( ) {
@@ -76,6 +94,7 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
             bitmapArray.add(imageBitmap)
             verticalDashRVAdapter.notifyDataSetChanged()
         }
+
     }
     private fun inItHorizontalDashRV(){
         horizontalDashRVAdapter= HorizontalDashRVAdapter(this)
@@ -170,6 +189,18 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
 
             }
             R.id.nav_help -> {
+
+            }
+            R.id.logout -> {
+                presenter.mFirebaseAuth.signOut()
+               FirebaseAuth.AuthStateListener {
+                    val user = it.currentUser
+                    if (user==null){
+                        val intent = Intent(this, LogInActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
 
             }
         }
