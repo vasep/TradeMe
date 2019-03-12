@@ -2,7 +2,7 @@ package com.example.trademe.di
 
 import com.example.trademe.dashboardactivity.DahBoardActivity
 import com.example.trademe.ligIn.LogInActivity
-import com.example.trademe.ligIn.RegistrationActivity
+import com.example.trademe.ligIn.registration.RegistrationActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

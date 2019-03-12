@@ -5,7 +5,7 @@ import com.example.trademe.models.Posts
 import com.example.trademe.models.Users
 
 
-public interface FirebaseHandler {
+ interface FirebaseHandler {
 
     fun uploadProfilePic(picBitmap: Bitmap, callback: Callback<String>)
     fun setUserInfo(currentUser: Users, callback: Callback<Void>)

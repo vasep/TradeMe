@@ -10,9 +10,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ligIn.ForgetAndChangePass">
+        <activity android:name=".ligIn.registration.ForgetAndChangePass">
         </activity>
-        <activity android:name=".ligIn.RegistrationActivity">
+        <activity android:name=".ligIn.registration.RegistrationActivity">
         </activity>
         <activity android:name=".dashboardactivity.DahBoardActivity">
         </activity>

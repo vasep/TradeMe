@@ -1,6 +1,8 @@
 package com.example.trademe.mvp
 
 open class BasePresenter<ViewT : IBaseView> : IBasePresenter<ViewT> {
+    override fun destroy() {
+    }
 
     protected var view : ViewT? = null
 

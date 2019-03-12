@@ -11,10 +11,11 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.trademe"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -40,6 +41,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
 
     // rx
     implementation 'com.netflix.rxjava:rxjava-android:0.16.1'

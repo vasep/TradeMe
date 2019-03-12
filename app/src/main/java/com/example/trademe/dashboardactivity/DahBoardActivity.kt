@@ -32,6 +32,13 @@ import com.google.firebase.auth.FirebaseUser
 
 
 class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(), NavigationView.OnNavigationItemSelectedListener, BootSheetFragment.BottomSheetListener {
+    override fun showLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     lateinit var verticalDashRVAdapter: VerticalDashRVAdapter
@@ -209,9 +216,7 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
         return true
     }
 
-    override fun setProgressBar(show: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
