@@ -88,7 +88,7 @@ class LogInActivity : BaseActivity<LogInContract.View, LogInPresenter>(), LogInC
                         val user = mAuth.currentUser
                         if (user != null) {
                             presenter.handleLoginSuccess(
-                                user.email!!
+                                user.email!!, user.uid
                             )
                         } else {
                             presenter.handleLoginFailure(0, "Unable to Login");

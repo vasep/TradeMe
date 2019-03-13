@@ -11,20 +11,24 @@ import android.support.v4.content.ContextCompat.startActivity
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.trademe.dashboardactivity.DahBoardActivity
+import com.example.trademe.datahandler.AppDataHandler
 import com.example.trademe.datahandler.DataHandler
 
-class LogInPresenter @Inject constructor(
-    val mDataHandler : DataHandler)
+class LogInPresenter @Inject constructor(context: Context)
     : BasePresenter<LogInContract.View>(), LogInContract.Presenter {
+
+       var mDataHandler= AppDataHandler.getInstance(context)
+
+
 
     override fun handleLoginRequest() {
         view?.showLoading()
         view?.startSignIn()
     }
 
-    override fun handleLoginSuccess(email: String ) {
+    override fun handleLoginSuccess(email: String, uiD : String) {
 
-        mDataHandler.saveUserEmail(email)
+        mDataHandler.saveUserEmail(email, uiD)
         view?.hideLoading()
         view?.loginSuccess()
     }

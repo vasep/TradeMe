@@ -1,7 +1,6 @@
 package com.example.trademe.di
 
 import com.example.trademe.App
-import com.example.trademe.firebase.di.FirebaseModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -12,7 +11,7 @@ import javax.inject.Singleton
 @Component(
     modules= [
         AppModule::class,
-        FirebaseModule::class,
+//        FirebaseModule::class,
         AndroidSupportInjectionModule::class,
         ActivityModule::class
 

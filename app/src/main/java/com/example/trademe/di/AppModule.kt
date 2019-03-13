@@ -1,6 +1,10 @@
 package com.example.trademe.di
 
+import android.content.Context
 import com.example.trademe.App
+import com.example.trademe.datahandler.AppDataHandler
+import com.example.trademe.datahandler.DataHandler
+import com.example.trademe.firebase.FirebaseHandlerImpl
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -22,4 +26,5 @@ class AppModule {
     internal fun priveFirebaseinstance(): FirebaseAuth{
      return FirebaseAuth.getInstance()
     }
+
 }

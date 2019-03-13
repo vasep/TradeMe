@@ -23,7 +23,7 @@ class LogInContract {
 
          fun handleLoginRequest()
 
-         fun handleLoginSuccess(email: String)
+         fun handleLoginSuccess(email: String, uiD : String)
 
          fun handleLoginFailure(statusCode: Int, message: String)
      }

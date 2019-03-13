@@ -1,6 +1,8 @@
 package com.example.trademe.firebase
 
+import android.content.Context
 import android.graphics.Bitmap
+import com.example.trademe.datahandler.AppDataHandler
 import com.example.trademe.models.Posts
 import com.example.trademe.models.Users
 import com.google.firebase.auth.FirebaseAuth
@@ -11,47 +13,29 @@ import com.google.firebase.database.ValueEventListener
 import java.util.ArrayList
 
 
-class FirebaseHandlerImpl @Inject constructor() : FirebaseHandler  {
+class FirebaseHandlerImpl {
 
-    private var mCurrentUser = FirebaseAuth.getInstance().currentUser
-     var mUsersRef: DatabaseReference
 
     private val KEY_USER_NAME = "name"
     private val KEY_USER_PIC = "image"
     private val KEY_USER_EMAIL = "email"
     private val KEY_TIMESTAMP = "timestamp"
 
-    var mValueListeners: List<ValueEventListener>? = null
+    private var mCurrentUser = FirebaseAuth.getInstance().currentUser
+     var database = FirebaseDatabase.getInstance()
+    val firebaseDatabase = database.getReference("Users")
 
-init {
-       val firebaseDatabase = FirebaseDatabase.getInstance()
-    val rootRef = firebaseDatabase.getReference("Users")
+    init {
 
-    mValueListeners=ArrayList<ValueEventListener>()
+    }
 
-    mUsersRef = rootRef
+    fun setUserInfo(currentUser: Users) {
 
+     var  userData = HashMap<String, String>()
+        userData.put("userEmail", currentUser.useremail!!)
+        userData.put("userID", currentUser.iD!!)
+        firebaseDatabase.push().setValue(userData)
+    }
 }
 
-    override fun uploadProfilePic(picBitmap: Bitmap, callback: FirebaseHandler.Callback<String>) {
-    }
 
-    override fun setUserInfo(currentUser: Users,  callback: FirebaseHandler.Callback<Void>) {
-        val userData = HashMap<String, Any>()
-
-        userData.put(KEY_USER_EMAIL, currentUser.useremail!!);
-
-        if (mCurrentUser == null) {
-            mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        }
-
-        mUsersRef!!.child(mCurrentUser!!.email!!).setValue(userData)
-            .addOnSuccessListener { _ -> callback.onReponse(null) }
-            .addOnFailureListener { _ -> callback.onError() }
-    }
-
-    override fun fetchposts(limitToFirst: Int, callback: FirebaseHandler.Callback<List<Posts>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}
