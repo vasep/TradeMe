@@ -1,7 +1,6 @@
-package com.example.trademe.dashboardactivity
+package com.example.trademe.dashboardactivity.recycler
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.trademe.R
-import java.text.FieldPosition
 import javax.inject.Inject
 
 class HorizontalDashRVAdapter @Inject constructor(private var context : Context): RecyclerView.Adapter<HorizontalDashRVAdapter.ViewHolder>() {

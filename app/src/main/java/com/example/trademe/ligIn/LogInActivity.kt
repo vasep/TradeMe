@@ -70,7 +70,6 @@ class LogInActivity : BaseActivity<LogInContract.View, LogInPresenter>(), LogInC
         Toast.makeText(this, " Login Failed", Toast.LENGTH_SHORT).show(); }
 
     override fun startSignIn() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun navigateToProfile() {
