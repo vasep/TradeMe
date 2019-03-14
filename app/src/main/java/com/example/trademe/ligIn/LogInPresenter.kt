@@ -1,25 +1,11 @@
 package com.example.trademe.ligIn
 
-import android.content.Context
-import android.util.Log
 import com.example.trademe.mvp.BasePresenter
 import javax.inject.Inject
-import com.google.firebase.auth.FirebaseAuth;
-import android.content.Intent
-import android.net.Uri
-import android.support.v4.content.ContextCompat.startActivity
-import android.text.TextUtils
-import android.widget.Toast
-import com.example.trademe.dashboardactivity.DahBoardActivity
-import com.example.trademe.datahandler.AppDataHandler
-import com.example.trademe.datahandler.DataHandler
+import com.example.trademe.ligIn.usecase.SaveUserInfoUseCase
 
-class LogInPresenter @Inject constructor(context: Context)
+class LogInPresenter @Inject constructor(private val saveUserInfoUseCase: SaveUserInfoUseCase)
     : BasePresenter<LogInContract.View>(), LogInContract.Presenter {
-
-       var mDataHandler= AppDataHandler.getInstance(context)
-
-
 
     override fun handleLoginRequest() {
         view?.showLoading()
@@ -27,8 +13,7 @@ class LogInPresenter @Inject constructor(context: Context)
     }
 
     override fun handleLoginSuccess(email: String, uiD : String) {
-
-        mDataHandler.saveUserEmail(email, uiD)
+        saveUserInfoUseCase.saveUserInfo(email, uiD)
         view?.hideLoading()
         view?.loginSuccess()
     }
@@ -38,12 +23,6 @@ class LogInPresenter @Inject constructor(context: Context)
         view?.loginFailure(statusCode, message)
     }
 
-
-    private fun updateUI(context: Context) {
-        val intent = Intent(context, DahBoardActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(context, intent, null)
-    }
     override fun destroy() {
         view= null
     }
