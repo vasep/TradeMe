@@ -1,8 +1,6 @@
 package com.example.trademe.firebase.di
 
 import android.content.Context
-import com.example.trademe.datahandler.AppDataHandler
-import com.example.trademe.datahandler.DataHandler
 import dagger.Module
 import dagger.Provides
 import com.example.trademe.firebase.FirebaseHandlerImpl

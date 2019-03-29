@@ -17,7 +17,7 @@ class SaveUserInfoUseCase @Inject constructor(private  val mFirebaseHandlerImpl:
         saveUserEmailToFireBase()
     }
 
-    private fun saveUserEmailToFireBase(){
+     fun saveUserEmailToFireBase(){
         var currentUser = Users()
         currentUser.useremail=sharedPreferencesHelper.getUserEmail()
         currentUser.iD= sharedPreferencesHelper.getUserId()

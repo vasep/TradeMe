@@ -24,22 +24,21 @@ class LogInActivity : BaseActivity<LogInContract.View, LogInPresenter>(), LogInC
         setContentView(R.layout.login_main)
 
         mProgressBar = findViewById(R.id.progressBar_cyclic)
-        mAuth = FirebaseAuth.getInstance();
-        sign_in_button.setOnClickListener({
+        mAuth = FirebaseAuth.getInstance()
+        sign_in_button.setOnClickListener {
             handleSignInWithEmailandPass(email.text.toString(), password.text.toString())
-        })
+        }
 
-        sign_up_button.setOnClickListener({
+        sign_up_button.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
-        })
-
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        mProgressBar.setVisibility(View.GONE);
+        mProgressBar.visibility = View.GONE;
         val currentUser = mAuth.currentUser
         if (currentUser != null) {
             // User has already signed in, navigate to home
@@ -48,10 +47,10 @@ class LogInActivity : BaseActivity<LogInContract.View, LogInPresenter>(), LogInC
     }
 
     override fun onResume() {
+        super.onResume()
         if (mAuth.currentUser != null) {
             navigateToProfile()
         }
-        super.onResume()
     }
 
     override fun showLoading() {

@@ -12,17 +12,13 @@ import com.example.trademe.R
 import com.example.trademe.models.Posts
 import javax.inject.Inject
 
-
-class VerticalDashRVAdapter @Inject constructor(var quizItemListener: QuizItemListener) :
+class VerticalDashRVAdapter @Inject constructor(var quizItemListener: QuizItemListener, var mposts : ArrayList<Posts> ) :
     RecyclerView.Adapter<VerticalDashRVAdapter.GridHolder>() {
 
-
-
      var mQuizItemListener: QuizItemListener
-     var mpostList: ArrayList<Posts>
 
     init {
-        mpostList = ArrayList<Posts>()
+
         this.mQuizItemListener = quizItemListener
     }
 
@@ -32,11 +28,11 @@ class VerticalDashRVAdapter @Inject constructor(var quizItemListener: QuizItemLi
     }
 
     override fun getItemCount(): Int {
-        return mpostList!!.size
+        return mposts.size
     }
 
     override fun onBindViewHolder(holder: GridHolder, position: Int) {
-        holder.imageView.setImageBitmap(mpostList!!.get(position).image)
+        holder.imageView.setImageBitmap(mposts.get(position).image)
         holder.txtCaption.setText("Caption " + position)
     }
 
@@ -55,8 +51,8 @@ class VerticalDashRVAdapter @Inject constructor(var quizItemListener: QuizItemLi
     }
 
     fun loadPosts(posts: ArrayList<Posts>) {
-        mpostList.clear()
-        mpostList.addAll(posts)
+        mposts.clear()
+        mposts.addAll(posts)
     }
 
     interface QuizItemListener {

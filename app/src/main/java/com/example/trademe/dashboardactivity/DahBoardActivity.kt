@@ -15,6 +15,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.helper.ItemTouchUIUtil
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -35,16 +36,21 @@ import android.view.animation.AnimationUtils
 import com.example.trademe.models.Posts
 
 
-class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(), NavigationView.OnNavigationItemSelectedListener, BootSheetFragment.BottomSheetListener, DashBoardContract.View {
+class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter>(),
+    NavigationView.OnNavigationItemSelectedListener,
+    BootSheetFragment.BottomSheetListener,
+    DashBoardContract.View,
+    VerticalDashRVAdapter.QuizItemListener{
 
+    override fun onQuizClicked(post: Posts) {
+
+    }
 
     lateinit var splashProgressLoading : ValueAnimator
     lateinit var verticalDashRVAdapter: VerticalDashRVAdapter
     lateinit var horizontalDashRVAdapter : HorizontalDashRVAdapter
     lateinit var toggle : ActionBarDrawerToggle
     lateinit var mProgressBar: ProgressBar
-
-    val bitmapArray = ArrayList<Bitmap>()
     val REQUEST_IMAGE_CAPTURE = 1
     var mFirebaseAuth : FirebaseAuth?= null
     var user: FirebaseUser? = null
@@ -53,8 +59,8 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dah_board)
         setSupportActionBar(toolbar)
-
-        val firebasdatabase =FirebaseDatabase.getInstance().getReference("user")
+        mFirebaseAuth= FirebaseAuth.getInstance()
+//        val firebasdatabase =FirebaseDatabase.getInstance().getReference("user")
         user=mFirebaseAuth!!.currentUser
 
         addBitmapforDashBoard()
@@ -99,7 +105,7 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data!!.extras.get("data") as Bitmap
-            bitmapArray.add(imageBitmap)
+            presenter.savePostToData(imageBitmap)
             verticalDashRVAdapter.notifyDataSetChanged()
         }
 
@@ -112,24 +118,14 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
     }
 
     private fun inItVerticalDashRV(){
-        verticalDashRVAdapter= VerticalDashRVAdapter(bitmapArray, this)
+        verticalDashRVAdapter= VerticalDashRVAdapter(this,presenter.bitmapArray )
         val layoutmanager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         rv_dashboard.layoutManager = layoutmanager
         rv_dashboard.adapter = verticalDashRVAdapter
     }
 
     private fun addBitmapforDashBoard(){
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.mountain))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.neshtosi5))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.old_man))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.road))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.skejt))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.slushalki4))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.pomognejtei))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.izgubane))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.zaso))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.nestomore))
-        bitmapArray.add(BitmapFactory.decodeResource(resources, R.drawable.kitka))
+
     }
 
     private fun inItActionBar(){
@@ -232,7 +228,7 @@ class DahBoardActivity : BaseActivity<DashBoardContract.View, DashBoardPresenter
 
     override fun hideLoading() {
         val recyclerViewLoading = AnimationUtils.loadAnimation(this, R.anim.anim_nothing)
-        mProgressBar.setVisibility(View.GONE);
+//        mProgressBar.setVisibility(View.GONE);
     }
     override fun navigateToSettings() {
         // still in works
